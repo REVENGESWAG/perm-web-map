@@ -7,23 +7,38 @@
   <meta name="description" content="Интерактивная карта Перми с измерением расстояний, площадей и координат.">
   <title>Пермь — веб-карта</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="./style.css?v=2">
+  <link rel="stylesheet" href="./style.css?v=3">
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
   <script defer src="https://unpkg.com/esri-leaflet@3.0.19/dist/esri-leaflet.js" crossorigin="anonymous"></script>
-  <script type="module" src="./map.mjs?v=2"></script>
+  <script type="module" src="./map.mjs?v=3"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="title-group">
-      <span class="brand-mark" aria-hidden="true">⌖</span>
-      <h1>Пермь<span>Веб-карта</span></h1>
-    </div>
-    <button id="home" class="home-button" type="button" title="Вернуться к начальному виду Перми">⌂&nbsp; Домой</button>
-  </header>
   <main class="workspace">
-    <aside class="sidebar" aria-label="Управление картой">
-      <section class="panel measure-panel" aria-labelledby="measure-heading">
-        <h2 id="measure-heading">Измерения</h2>
+    <div class="map-frame">
+      <div id="map" role="region" aria-label="Интерактивная карта Перми"></div>
+      <p id="map-notice" class="map-notice" role="status">Загрузка карты…</p>
+      <noscript><p class="map-notice">Для работы карты включите JavaScript.</p></noscript>
+    </div>
+
+    <header class="dock">
+      <div class="title-group">
+        <span class="brand-mark" aria-hidden="true">⌖</span>
+        <h1>Карта Перми</h1>
+      </div>
+      <nav class="dock-tools" aria-label="Инструменты карты">
+        <button type="button" data-panel="layers" aria-expanded="false" aria-controls="drawer">Слои</button>
+        <button type="button" data-panel="measure" aria-expanded="false" aria-controls="drawer">Измерить</button>
+        <button type="button" id="mark" aria-pressed="false">Метка</button>
+        <button type="button" data-panel="share" aria-expanded="false" aria-controls="drawer">Поделиться</button>
+      </nav>
+    </header>
+
+    <aside id="drawer" class="drawer" aria-labelledby="drawer-heading" hidden>
+      <div class="drawer-heading">
+        <h2 id="drawer-heading"></h2>
+        <button id="close-panel" class="icon-button" type="button" aria-label="Закрыть панель" title="Закрыть панель">×</button>
+      </div>
+      <section id="measure-panel" hidden>
         <div class="tools" role="group" aria-label="Режим измерения">
           <button type="button" data-mode="length" aria-pressed="false">Длина</button>
           <button type="button" data-mode="area" aria-pressed="false">Площадь</button>
@@ -41,8 +56,7 @@
           <button id="clear" type="button" hidden>Очистить</button>
         </div>
       </section>
-      <section class="panel" aria-labelledby="layers-heading">
-        <h2 id="layers-heading">Слои</h2>
+      <section id="layers-panel" hidden>
         <fieldset>
           <legend>Подложка</legend>
           <label class="layer"><input type="radio" name="basemap" value="osm" checked> <span>OpenStreetMap</span></label>
@@ -54,12 +68,25 @@
           <label class="layer"><input id="measurements" type="checkbox" checked> <span>Результат измерения</span></label>
         </fieldset>
       </section>
+      <section id="share-panel" hidden>
+        <label for="share-url">Ссылка на текущий вид и метку</label>
+        <input id="share-url" type="url" readonly>
+        <button id="copy-link" class="primary" type="button">Скопировать ссылку</button>
+        <p id="share-status" class="feedback" role="status"></p>
+      </section>
     </aside>
-    <div class="map-frame">
-      <div id="map" role="region" aria-label="Интерактивная карта Перми"></div>
-      <p id="map-notice" class="map-notice" role="status">Загрузка карты…</p>
-      <noscript><p class="map-notice">Для работы карты включите JavaScript.</p></noscript>
+
+    <div class="map-actions" role="group" aria-label="Навигация по карте">
+      <button type="button" id="zoom-in" class="icon-button" aria-label="Приблизить" title="Приблизить">+</button>
+      <button type="button" id="zoom-out" class="icon-button" aria-label="Отдалить" title="Отдалить">−</button>
+      <button type="button" id="home" class="icon-button" aria-label="Домой" title="Домой · начальный вид Перми">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v11h14V9M10 20v-6h4v6"/></svg>
+      </button>
+      <button type="button" id="locate" class="icon-button" aria-label="Моё местоположение" title="Моё местоположение">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/></svg>
+      </button>
     </div>
+    <p id="map-feedback" class="map-feedback" role="status" hidden></p>
   </main>
 </body>
 </html>
