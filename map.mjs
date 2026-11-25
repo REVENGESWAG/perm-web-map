@@ -25,7 +25,8 @@ if (window.L) {
 
 function initializeMap(L) {
   const homeBounds = L.latLngBounds([57.91, 55.98], [58.17, 56.57]);
-  const map = L.map(mapElement, { minZoom: 2, maxZoom: 20 });
+  const map = L.map(mapElement, { minZoom: 2, maxZoom: 20, zoomControl: false });
+  L.control.zoom({ zoomInTitle: 'Приблизить', zoomOutTitle: 'Отдалить' }).addTo(map);
   const goHome = () => map.fitBounds(homeBounds, { padding: [16, 16], animate: false });
   goHome();
   element('home').addEventListener('click', goHome);

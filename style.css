@@ -133,7 +133,7 @@ legend { padding: 0; margin-bottom: 6px; color: var(--muted); font-size: .875rem
 @media (max-width: 740px) {
   .topbar { min-height: 64px; }
   .workspace { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 10px; }
-  .map-frame { grid-row: 1; height: 57dvh; min-height: 260px; }
+  .map-frame { grid-row: 1; height: 52dvh; min-height: 240px; }
   .sidebar { gap: 10px; }
   .panel { padding: 14px; }
 }

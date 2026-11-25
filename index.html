@@ -22,19 +22,6 @@
   </header>
   <main class="workspace">
     <aside class="sidebar" aria-label="Управление картой">
-      <section class="panel" aria-labelledby="layers-heading">
-        <h2 id="layers-heading">Слои</h2>
-        <fieldset>
-          <legend>Подложка</legend>
-          <label class="layer"><input type="radio" name="basemap" value="osm" checked> <span>OpenStreetMap</span></label>
-          <label class="layer"><input type="radio" name="basemap" value="imagery"> <span>Спутник Esri</span></label>
-        </fieldset>
-        <fieldset>
-          <legend>Дополнительные слои</legend>
-          <label class="layer"><input id="home-extent" type="checkbox"> <span>Границы начального вида</span></label>
-          <label class="layer"><input id="measurements" type="checkbox" checked> <span>Результат измерения</span></label>
-        </fieldset>
-      </section>
       <section class="panel measure-panel" aria-labelledby="measure-heading">
         <h2 id="measure-heading">Измерения</h2>
         <div class="tools" role="group" aria-label="Режим измерения">
@@ -53,6 +40,19 @@
           <button id="undo" type="button" hidden>Убрать точку</button>
           <button id="clear" type="button" hidden>Очистить</button>
         </div>
+      </section>
+      <section class="panel" aria-labelledby="layers-heading">
+        <h2 id="layers-heading">Слои</h2>
+        <fieldset>
+          <legend>Подложка</legend>
+          <label class="layer"><input type="radio" name="basemap" value="osm" checked> <span>OpenStreetMap</span></label>
+          <label class="layer"><input type="radio" name="basemap" value="imagery"> <span>Спутник Esri</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>Дополнительные слои</legend>
+          <label class="layer"><input id="home-extent" type="checkbox"> <span>Границы начального вида</span></label>
+          <label class="layer"><input id="measurements" type="checkbox" checked> <span>Результат измерения</span></label>
+        </fieldset>
       </section>
     </aside>
     <div class="map-frame">
