@@ -78,6 +78,7 @@ function initializeMap(L) {
   function showBasemap(name) {
     if (activeBasemap) map.removeLayer(activeBasemap);
     basemapName = name;
+    mapElement.dataset.basemap = name;
     activeBasemap = basemaps[name];
     mapNotice.textContent = 'Загрузка подложки…';
     mapNotice.hidden = false;
@@ -92,6 +93,7 @@ function initializeMap(L) {
   }
 
   L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+  addRiverCredit(L, map);
   const overlay = L.layerGroup();
   const extent = L.rectangle(homeBounds, { color: '#065a55', dashArray: '6 5', weight: 2, fill: false, interactive: false });
   const showResult = element('measurements');
@@ -359,4 +361,33 @@ function initializeMap(L) {
       copyStatus.textContent = 'Буфер обмена недоступен. Координаты можно выделить и скопировать вручную.';
     }
   });
+}
+
+function addRiverCredit(L, map) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 500 150');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'Вайбкодил Моисеенко Илья)');
+  svg.classList.add('river-credit');
+  svg.innerHTML = `
+    <defs><path id="kama-credit-path" d="M15 134 Q48 112 87 121 C124 127 149 137 184 133 S244 126 289 119 S362 107 399 86 Q440 62 470 9"/></defs>
+    <text text-anchor="middle" dy=".3em"><textPath href="#kama-credit-path" startOffset="61%">Вайбкодил Моисеенко Илья)</textPath></text>`;
+  // The viewBox and bounds are matched in Web Mercator at zoom 11.
+  const bounds = L.latLngBounds([58.00991667, 55.98976135], [58.06443997, 56.33308411]);
+  const label = L.svgOverlay(svg, bounds);
+  const text = svg.querySelector('text');
+
+  function updateLabel() {
+    const zoom = map.getZoom();
+    if (zoom < 9 || zoom > 16) {
+      label.remove();
+      return;
+    }
+    const screenSize = Math.min(20, 8 + (zoom - 9) * 3.5);
+    text.setAttribute('font-size', screenSize / 2 ** (zoom - 11));
+    if (!map.hasLayer(label)) label.addTo(map);
+  }
+
+  map.on('zoomend', updateLabel);
+  updateLabel();
 }

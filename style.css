@@ -26,6 +26,8 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid 
 .map-frame { position: absolute; inset: 0; z-index: 0; }
 #map { background: #e0ece8; }
 #map.is-measuring { cursor: crosshair; }
+.river-credit text { fill: #286987; stroke: #abd2de; stroke-width: .11em; paint-order: stroke; stroke-linejoin: round; font-family: system-ui, sans-serif; font-weight: 650; }
+#map[data-basemap="imagery"] .river-credit text { fill: #a6dfef; stroke: #1d485d; }
 
 .dock, .drawer, .map-actions { position: absolute; background: var(--paper); box-shadow: var(--shadow); z-index: 1; }
 .dock, .drawer { left: var(--edge); width: min(var(--dock-width), calc(100% - 2 * var(--edge))); border-radius: 17px; }
