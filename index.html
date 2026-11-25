@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="description" content="Интерактивная карта Перми с измерением расстояний, площадей и координат.">
+  <title>Пермь — веб-карта</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+  <script defer src="https://unpkg.com/esri-leaflet@3.0.19/dist/esri-leaflet.js" crossorigin="anonymous"></script>
+  <script type="module" src="./map.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="title-group">
+      <span class="brand-mark" aria-hidden="true">⌖</span>
+      <h1>Пермь<span>Веб-карта</span></h1>
+    </div>
+    <button id="home" class="home-button" type="button" title="Вернуться к начальному виду Перми">⌂&nbsp; Домой</button>
+  </header>
+  <main class="workspace">
+    <aside class="sidebar" aria-label="Управление картой">
+      <section class="panel" aria-labelledby="layers-heading">
+        <h2 id="layers-heading">Слои</h2>
+        <fieldset>
+          <legend>Подложка</legend>
+          <label class="layer"><input type="radio" name="basemap" value="osm" checked> <span>OpenStreetMap</span></label>
+          <label class="layer"><input type="radio" name="basemap" value="imagery"> <span>Спутник Esri</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>Дополнительные слои</legend>
+          <label class="layer"><input id="home-extent" type="checkbox"> <span>Границы начального вида</span></label>
+          <label class="layer"><input id="measurements" type="checkbox" checked> <span>Результат измерения</span></label>
+        </fieldset>
+      </section>
+      <section class="panel measure-panel" aria-labelledby="measure-heading">
+        <h2 id="measure-heading">Измерения</h2>
+        <div class="tools" role="group" aria-label="Режим измерения">
+          <button type="button" data-mode="length" aria-pressed="false">Длина</button>
+          <button type="button" data-mode="area" aria-pressed="false">Площадь</button>
+          <button type="button" data-mode="coordinate" aria-pressed="false">Координаты</button>
+        </div>
+        <div class="readout">
+          <p id="hint">Выберите инструмент и укажите точки на карте.</p>
+          <output id="result" aria-live="polite" hidden></output>
+          <button id="copy" class="text-button" type="button" hidden>Скопировать координаты</button>
+          <span id="copy-status" role="status"></span>
+        </div>
+        <div class="actions">
+          <button id="finish" type="button" class="primary" hidden>Завершить</button>
+          <button id="undo" type="button" hidden>Убрать точку</button>
+          <button id="clear" type="button" hidden>Очистить</button>
+        </div>
+      </section>
+    </aside>
+    <div class="map-frame">
+      <div id="map" role="region" aria-label="Интерактивная карта Перми"></div>
+      <p id="map-notice" class="map-notice" role="status">Загрузка карты…</p>
+      <noscript><p class="map-notice">Для работы карты включите JavaScript.</p></noscript>
+    </div>
+  </main>
+</body>
+</html>
